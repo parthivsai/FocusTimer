@@ -1,0 +1,143 @@
+.backgroundColor {
+}
+
+.outerContainer {
+  margin-left: 25%;
+  margin-right: 25%;
+
+  color: white;
+
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+.middleContainer {
+  text-align: center;
+}
+
+.backgroundColor {
+  background-color: rgb(186, 73, 73);
+  height: 100vh;
+}
+.reportButton,
+.settingsButton {
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.9;
+  background: none rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+
+  font-size: 13px;
+  margin-left: 10px;
+  padding: 8px 12px;
+
+  border: none;
+  color: white !important;
+}
+
+.start {
+  cursor: pointer;
+  border: none;
+  margin: 20px 0px 0px;
+  padding: 0px 12px;
+  border-radius: 4px;
+  /* font-family: ArialRounded; */
+  font-size: 1.5rem;
+  height: 4rem;
+  color: rgb(186, 73, 73);
+  font-weight: bold;
+  width: 200px;
+  background-color: white;
+  transition: transform 0.3s;
+}
+
+.start:hover {
+  transform: scale(1.1);
+}
+
+.TopContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-end;
+  overflow: auto;
+  flex-direction: row;
+}
+
+.FocusOptions {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-end;
+  overflow: auto;
+  flex-direction: row;
+}
+
+.FocusOptions {
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.9;
+  /* background: none rgba(255, 255, 255, 0.2); */
+  box-shadow: none;
+}
+
+.Focus,
+.shortBreak,
+.longBreak {
+  border: none;
+  margin: 0px;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 2px 12px;
+  height: 28px;
+  cursor: pointer;
+  background: none;
+  box-shadow: none;
+  color: white;
+  /* margin-left: 1%; */
+  background: none rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  margin: 1%;
+  transition: transform 0.1s;
+}
+
+.longBreak:hover,
+.Focus:hover,
+.shortBreak:hover {
+  transform: scale(1.1);
+}
+
+.Time {
+  font-size: 120px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.todos {
+  /* display: flex; */
+  align-items: center;
+  cursor: pointer;
+  opacity: 0.9;
+
+  font-size: 1.2rem;
+  margin-left: 40px;
+  margin-right: 40px;
+
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.todo {
+  background: none rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+  margin: 5px;
+  border-radius: 4px;
+  /* width: 75%; */
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.todo:hover {
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+}
