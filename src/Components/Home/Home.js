@@ -5,6 +5,10 @@ import { IoIosSettings } from "react-icons/io";
 import { useState } from "react";
 
 const Home = () => {
+  const [newTask, setNewTask] = useState("");
+  var [showPopup, setShowPopup] = useState(true);
+  console.log(showPopup);
+
   const text = "Enjoy your session";
   let todoList = ["Work on the project", "Go to gym"];
   const [Todos, setTodos] = useState(todoList);
@@ -43,10 +47,41 @@ const Home = () => {
             <button className="start">Start</button>
           </div>
           <hr />
-          <h2>ToDo's</h2>
+          <div>
+            <h2>ToDo's</h2>
 
-          <div className="todos">
-            {Todos && Todos.map((todo) => <div className="todo"> {todo} </div>)}
+            <div className="todos">
+              {Todos &&
+                Todos.map((todo) => <div className="todo"> {todo} </div>)}
+            </div>
+            {showPopup && (
+              <div className="popup">
+                <div className="popupContent">
+                  <input type="text" placeholder="what are you up to?" />
+                  <input type="number" placeholder="0" />
+                </div>
+                <div className="popupFooter">
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => setShowPopup(false)}
+                  >
+                    Close
+                  </button>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => setShowPopup(false)}
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            )}
+            <button
+              className="addButton"
+              onClick={() => setShowPopup(!showPopup)}
+            >
+              Add
+            </button>
           </div>
         </div>
         <br />
