@@ -1,6 +1,3 @@
-.backgroundColor {
-}
-
 .outerContainer {
   margin-left: 25%;
   margin-right: 25%;
@@ -14,9 +11,14 @@
   text-align: center;
 }
 
-.backgroundColor {
+.FocusBackground {
   background-color: rgb(186, 73, 73);
-  /* height: 100vh; */
+}
+.ShortBackground {
+  background-color: rgb(56, 133, 138);
+}
+.LongBackground {
+  background-color: rgb(57, 112, 151);
 }
 .reportButton,
 .settingsButton {
@@ -34,13 +36,13 @@
   color: white !important;
 }
 
-.start {
+.FocusStart {
   cursor: pointer;
   border: none;
   margin: 20px 0px 0px;
   padding: 0px 12px;
   border-radius: 4px;
-  /* font-family: ArialRounded; */
+  font-family: ArialRounded;
   font-size: 1.2rem;
   height: 4rem;
   color: rgb(186, 73, 73);
@@ -49,8 +51,40 @@
   background-color: white;
   transition: transform 0.2s;
 }
+.ShortStart {
+  cursor: pointer;
+  border: none;
+  margin: 20px 0px 0px;
+  padding: 0px 12px;
+  border-radius: 4px;
+  font-family: ArialRounded;
+  font-size: 1.2rem;
+  height: 4rem;
+  color: rgb(56, 133, 138);
+  font-weight: bold;
+  width: 200px;
+  background-color: white;
+  transition: transform 0.2s;
+}
+.LongStart {
+  cursor: pointer;
+  border: none;
+  margin: 20px 0px 0px;
+  padding: 0px 12px;
+  border-radius: 4px;
+  font-family: ArialRounded;
+  font-size: 1.2rem;
+  height: 4rem;
+  color: rgb(57, 112, 151);
+  font-weight: bold;
+  width: 200px;
+  background-color: white;
+  transition: transform 0.2s;
+}
 
-.start:hover {
+.FocusStart:hover,
+.ShortStart:hover,
+.LongStart:hover {
   transform: scale(1.1);
 }
 
@@ -78,13 +112,10 @@
   border-radius: 4px;
   cursor: pointer;
   opacity: 0.9;
-  /* background: none rgba(255, 255, 255, 0.2); */
   box-shadow: none;
 }
 
-.Focus,
-.shortBreak,
-.longBreak {
+.default {
   border: none;
   margin: 0px;
   border-radius: 4px;
@@ -95,8 +126,24 @@
   background: none;
   box-shadow: none;
   color: white;
-  /* margin-left: 1%; */
   background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  margin: 1%;
+  transition: transform 0.1s;
+}
+
+.Clicked {
+  border: none;
+  margin: 0px;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 2px 12px;
+  height: 28px;
+  cursor: pointer;
+  background: none;
+  box-shadow: none;
+  color: white;
+  background: none rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   margin: 1%;
   transition: transform 0.1s;
@@ -109,13 +156,12 @@
 }
 
 .Time {
-  font-size: 120px;
+  font-size: 100px;
   font-weight: bold;
   margin-top: 20px;
 }
 
 .todos {
-  /* display: flex; */
   align-items: center;
   cursor: pointer;
   opacity: 0.9;
@@ -132,8 +178,8 @@
   background: none rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
   margin: 5px;
+  font-family: ArialRounded;
   border-radius: 4px;
-  /* width: 75%; */
   transition: background 0.3s, box-shadow 0.3s;
 }
 
@@ -142,12 +188,13 @@
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
 }
 
-.addButton {
+.FocusAdd {
   border: none;
   background: none;
   box-shadow: none;
   color: rgb(186, 73, 73);
   font-weight: bold;
+  font-family: ArialRounded;
   background-color: white;
   border-radius: 4px;
   margin: 10px 0px 0px;
@@ -155,10 +202,47 @@
   transition: transform 0.2s;
 }
 
-.addButton:hover {
+.ShortAdd {
+  border: none;
+  background: none;
+  box-shadow: none;
+  color: rgb(56, 133, 138);
+  font-weight: bold;
+  font-family: ArialRounded;
+  background-color: white;
+  border-radius: 4px;
+  margin: 10px 0px 0px;
+  width: 100px;
+  transition: transform 0.2s;
+}
+
+.LongAdd {
+  border: none;
+  background: none;
+  box-shadow: none;
+  color: rgb(57, 112, 151);
+  font-weight: bold;
+  font-family: ArialRounded;
+  background-color: white;
+  border-radius: 4px;
+  margin: 10px 0px 0px;
+  width: 100px;
+  transition: transform 0.2s;
+}
+
+.FocusAdd:hover,
+.LongAdd:hover,
+.ShortAdd:hover {
   transform: scale(1.1);
 }
 
-.popup {
-  background-color: wheat;
+.displayPopup {
+  margin: auto;
+}
+
+.middleTop {
+  opacity: 0.9;
+  background: none rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+  padding: 20px;
 }
