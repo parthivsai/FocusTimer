@@ -18,7 +18,7 @@ const Home = () => {
 
   const [backgroundColor, setBackgroundColor] = useState("FocusBackground");
 
-  const [displayMinutes, setDisplayMinutes] = useState("2");
+  const [displayMinutes, setDisplayMinutes] = useState("25");
   const [displaySeconds, setDisplaySeconds] = useState("00");
 
   const [isFocusRunning, setIsFocusRunning] = useState(false);
@@ -30,17 +30,23 @@ const Home = () => {
   const [buttonText, setButtonText] = useState("Start");
 
   let todoList = ["Work on the project"];
-  let time = { Focus: "2", Short: "1", Long: "1" };
+  let valueList = [2];
+  let time = { Focus: "25", Short: "5", Long: "15" };
 
   const [Todos, setTodos] = useState(todoList);
+  const [pomValues, setPomValues] = useState(valueList);
   const [currentTodo, setCurrentTodo] = useState("");
+  const [currentPomValue, setCurrentPomValue] = useState(0);
   const [roundText, setRoundText] = useState(1);
   const [pomoText, setPomoText] = useState(0);
   const [totalPomos, setTotalPomos] = useState(2);
 
-  const handleTodo = (todo) => {
+  const [finishedTodos, setFinishedTodos] = useState([]);
+
+  const handleTodo = (todo, value) => {
     if (!Todos.includes(todo)) {
       setTodos((prev) => [...prev, todo]);
+      setPomValues((prev) => [...prev, value]);
     }
   };
 
@@ -192,17 +198,22 @@ const Home = () => {
             setRoundText(1);
             setIsFocusRunning(true);
             setAddButton("Pause");
-            if (pomoText < totalPomos) {
+            // Checking if the set amount of pomo's is reached or not, if reached change it to next to do, else increase the pomocount
+            if (pomoText < currentPomValue - 1) {
               setPomoText((prev) => prev + 1);
               setRoundText(1);
             } else {
               let index = Todos.indexOf(currentTodo);
+              setFinishedTodos((prev) => [...prev, Todos[index]]);
+
+              // checking if this is the last todo or not and executing accordingly
               if (index === Todos.length - 1) {
                 window.alert(
                   "Hurray, All tasks are finished. Go have some fun!!"
                 );
               } else {
                 setCurrentTodo(Todos[index + 1]);
+                setCurrentPomValue(pomValues[index + 1]);
                 setRoundText(1);
                 setPomoText(0);
               }
@@ -275,15 +286,18 @@ const Home = () => {
       handleFocusClick();
     } else {
       handleFocusClick();
-      if (pomoText < totalPomos - 1) {
+      if (pomoText < currentPomValue - 1) {
         setPomoText((prev) => prev + 1);
         setRoundText(1);
       } else {
         let index = Todos.indexOf(currentTodo);
+        setFinishedTodos((prev) => [...prev, Todos[index]]);
         if (index === Todos.length - 1) {
+          setPomoText((prev) => prev + 1);
           window.alert("Hurray, All tasks are finished. Go have some fun!!");
         } else {
           setCurrentTodo(Todos[index + 1]);
+          setCurrentPomValue(pomValues[index + 1]);
           setPomoText(0);
           setRoundText(1);
         }
@@ -291,8 +305,9 @@ const Home = () => {
     }
   };
 
-  const handleTodoClick = (todo) => {
+  const handleTodoClick = (todo, index) => {
     setCurrentTodo(todo);
+    setCurrentPomValue(pomValues[index]);
     setText("Time to focus!");
     setRoundText(1);
   };
@@ -347,7 +362,7 @@ const Home = () => {
               <div className="currentTodo">
                 <p className="roundText">#{roundText}</p>
                 <h6 className="roundTodoText">
-                  {currentTodo} ({pomoText}/{totalPomos})
+                  {currentTodo} ({pomoText}/{currentPomValue})
                 </h6>
               </div>
             )}
@@ -357,17 +372,31 @@ const Home = () => {
             <h2>ToDo's</h2>
 
             <div className="todos">
-              {Todos &&
-                Todos.map((todo, index) => (
+              {finishedTodos &&
+                finishedTodos.map((todo, index) => (
                   <div
                     key={index}
-                    className="todo"
-                    onClick={() => handleTodoClick(todo)}
+                    className="finishedTodo"
+                    onClick={() => handleTodoClick(todo, index)}
                   >
                     {" "}
-                    {todo}{" "}
+                    <s>{todo}</s>{" "}
                   </div>
                 ))}
+              {Todos &&
+                Todos.map(
+                  (todo, index) =>
+                    !finishedTodos.includes(todo) && (
+                      <div
+                        key={index}
+                        className="todo"
+                        onClick={() => handleTodoClick(todo, index)}
+                      >
+                        {" "}
+                        {todo}{" "}
+                      </div>
+                    )
+                )}
             </div>
 
             {showPopup && (

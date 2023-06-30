@@ -7,14 +7,19 @@ import "./AddTodo.css";
 
 const AddTodo = (props) => {
   const [todo, setTodo] = useState("");
+  const [value, setValue] = useState(0);
 
   const handleChange = (event) => {
     setTodo(event.target.value);
   };
 
+  const handleNumberChange = (event) => {
+    setValue(event.target.value);
+  };
+
   const handleSave = () => {
     console.log("in AddTodos and the adding value is : " + todo);
-    props.handleTodo(todo);
+    props.handleTodo(todo, value);
     props.handlePopup(false);
   };
 
@@ -39,6 +44,7 @@ const AddTodo = (props) => {
             min="0"
             max="1000"
             className="NumberInput"
+            onChange={handleNumberChange}
           />
         </div>
       </div>
