@@ -2,7 +2,8 @@ import "./Home.css";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { HiDocumentReport } from "react-icons/hi";
 import { IoIosSettings } from "react-icons/io";
-import { useState } from "react";
+import { AiFillStepForward } from "react-icons/ai";
+import { useState, useEffect } from "react";
 import AddTodo from "../AddTodo/AddTodo";
 
 const Home = () => {
@@ -13,21 +14,31 @@ const Home = () => {
   const [longButton, setLongButton] = useState("default");
 
   const [startButton, setStartButton] = useState("FocusStart");
-  const [addButton, setAddButton] = useState("FocusStart");
+  const [addButton, setAddButton] = useState("FocusAdd");
 
   const [backgroundColor, setBackgroundColor] = useState("FocusBackground");
 
-  const [displayTime, setDisplayTime] = useState(25);
+  const [displayMinutes, setDisplayMinutes] = useState("2");
+  const [displaySeconds, setDisplaySeconds] = useState("00");
+
+  const [isFocusRunning, setIsFocusRunning] = useState(false);
+  const [isShortRunning, setIsShortRunning] = useState(false);
+  const [isLongRunning, setIsLongRunning] = useState(false);
 
   const [text, setText] = useState("Time to focus!");
+
+  const [buttonText, setButtonText] = useState("Start");
+
   let todoList = ["Work on the project"];
-  let time = { Focus: 25, Short: 5, Long: 15 };
+  let time = { Focus: "2", Short: "1", Long: "1" };
 
   const [Todos, setTodos] = useState(todoList);
-  console.log(Todos);
+  const [currentTodo, setCurrentTodo] = useState("");
+  const [roundText, setRoundText] = useState(1);
+  const [pomoText, setPomoText] = useState(0);
+  const [totalPomos, setTotalPomos] = useState(2);
 
   const handleTodo = (todo) => {
-    console.log("In home and the todo value is: " + todo);
     if (!Todos.includes(todo)) {
       setTodos((prev) => [...prev, todo]);
     }
@@ -39,36 +50,251 @@ const Home = () => {
   };
 
   const handleFocusClick = () => {
-    setDisplayTime(time.Focus);
-    setBackgroundColor("FocusBackground");
-    setText("Time to focus!");
-    setFocusButton("Clicked");
-    setShortButton("default");
-    setLongButton("default");
-    setStartButton("FocusStart");
-    setAddButton("FocusAdd");
+    setIsShortRunning(false);
+    setIsLongRunning(false);
+    if (backgroundColor !== "FocusBackground") {
+      setDisplaySeconds("00");
+      setDisplayMinutes(time.Focus);
+      setBackgroundColor("FocusBackground");
+      setText("Time to focus!");
+      setButtonText("Start");
+      setFocusButton("Clicked");
+      setShortButton("default");
+      setLongButton("default");
+      setStartButton("FocusStart");
+      setAddButton("FocusAdd");
+    }
   };
 
   const handleShortClick = () => {
-    setDisplayTime(time.Short);
-    setBackgroundColor("ShortBackground");
-    setText("Time for a break!");
-    setShortButton("Clicked");
-    setFocusButton("default");
-    setLongButton("default");
-    setStartButton("ShortStart");
-    setAddButton("ShortAdd");
+    setIsFocusRunning(false);
+    setIsLongRunning(false);
+    if (backgroundColor !== "ShortBackground") {
+      setDisplayMinutes(time.Short);
+      setDisplaySeconds("00");
+      setButtonText("Start");
+      setBackgroundColor("ShortBackground");
+      setText("Time for a short break!");
+      setShortButton("Clicked");
+      setFocusButton("default");
+      setLongButton("default");
+      setStartButton("ShortStart");
+      setAddButton("ShortAdd");
+    }
   };
 
   const handleLongClick = () => {
-    setDisplayTime(time.Long);
-    setBackgroundColor("LongBackground");
-    setText("Time for a break!");
-    setLongButton("Clicked");
-    setFocusButton("default");
-    setShortButton("default");
-    setStartButton("LongStart");
-    setAddButton("LongAdd");
+    setIsFocusRunning(false);
+    setIsShortRunning(false);
+    if (backgroundColor !== "LongBackground") {
+      setDisplayMinutes(time.Long);
+      setDisplaySeconds("00");
+      setButtonText("Start");
+      setBackgroundColor("LongBackground");
+      setText("Time for a break!");
+      setLongButton("Clicked");
+      setFocusButton("default");
+      setShortButton("default");
+      setStartButton("LongStart");
+      setAddButton("LongAdd");
+    }
+  };
+
+  useEffect(() => {
+    let timer;
+    if (isFocusRunning) {
+      let minutes = parseInt(displayMinutes, 10);
+      let seconds = parseInt(displaySeconds, 10);
+      timer = setInterval(() => {
+        if (seconds === 0) {
+          if (minutes === 0) {
+            if (roundText === 4) {
+              handleLongClick();
+              setIsLongRunning(true);
+              setAddButton("Pause");
+              return;
+            }
+            handleShortClick();
+            setIsShortRunning(true);
+            setAddButton("Pause");
+            return;
+          }
+          minutes -= 1;
+          seconds = 59;
+        } else {
+          seconds -= 1;
+        }
+        console.log("minutes: " + minutes, "Seconds: " + seconds);
+        let minString = minutes.toString();
+        if (minString.length === 1) {
+          minString = "0" + minString;
+        }
+        let secString = seconds.toString();
+        if (secString.length === 1) {
+          secString = "0" + secString;
+        }
+        setDisplayMinutes(minString);
+        setDisplaySeconds(secString);
+      }, 1000);
+    }
+    return () => {
+      clearInterval(timer);
+    };
+  }, [isFocusRunning]);
+
+  useEffect(() => {
+    let timer;
+    if (isShortRunning) {
+      let minutes = parseInt(displayMinutes, 10);
+      let seconds = parseInt(displaySeconds, 10);
+      timer = setInterval(() => {
+        if (seconds === 0) {
+          if (minutes === 0) {
+            setRoundText((prev) => prev + 1);
+            handleFocusClick();
+            setIsFocusRunning(true);
+            setAddButton("Pause");
+            return;
+          }
+          // change seconds to 00 and reduce minutes by 1
+          minutes -= 1;
+          seconds = 59;
+        } else {
+          seconds -= 1;
+        }
+        console.log("minutes: " + minutes, "Seconds: " + seconds);
+        let minString = minutes.toString();
+        if (minString.length === 1) {
+          minString = "0" + minString;
+        }
+        let secString = seconds.toString();
+        if (secString.length === 1) {
+          secString = "0" + secString;
+        }
+        setDisplayMinutes(minString);
+        setDisplaySeconds(secString);
+      }, 1000);
+    }
+    return () => {
+      clearInterval(timer);
+    };
+  }, [isShortRunning]);
+
+  useEffect(() => {
+    let timer;
+    let minutes = parseInt(displayMinutes, 10);
+    let seconds = parseInt(displaySeconds, 10);
+    if (isLongRunning) {
+      timer = setInterval(() => {
+        if (seconds === 0) {
+          if (minutes === 0) {
+            handleFocusClick();
+            setRoundText(1);
+            setIsFocusRunning(true);
+            setAddButton("Pause");
+            if (pomoText < totalPomos) {
+              setPomoText((prev) => prev + 1);
+              setRoundText(1);
+            } else {
+              let index = Todos.indexOf(currentTodo);
+              if (index === Todos.length - 1) {
+                window.alert(
+                  "Hurray, All tasks are finished. Go have some fun!!"
+                );
+              } else {
+                setCurrentTodo(Todos[index + 1]);
+                setRoundText(1);
+                setPomoText(0);
+              }
+            }
+            return;
+          }
+          minutes -= 1;
+          seconds = 59;
+        } else {
+          seconds -= 1;
+        }
+        console.log("minutes: " + minutes, "Seconds: " + seconds);
+        let minString = minutes.toString();
+        if (minString.length === 1) {
+          minString = "0" + minString;
+        }
+        let secString = seconds.toString();
+        if (secString.length === 1) {
+          secString = "0" + secString;
+        }
+        setDisplayMinutes(minString);
+        setDisplaySeconds(secString);
+      }, 1000);
+    }
+    return () => {
+      clearInterval(timer);
+    };
+  }, [isLongRunning]);
+
+  const handleStart = () => {
+    if (buttonText === "Pause") {
+      setButtonText("Start");
+      if (startButton === "FocusStart") {
+        setIsFocusRunning(false);
+      } else if (startButton === "ShortStart") {
+        setIsShortRunning(false);
+      } else {
+        setIsLongRunning(false);
+      }
+      return;
+    } else {
+      if (currentTodo === "") {
+        {
+          setText("Select a Todo to work on!!");
+          return;
+        }
+      }
+      setButtonText("Pause");
+      if (startButton === "FocusStart") {
+        setIsFocusRunning(true);
+        return;
+      } else if (startButton === "ShortStart") {
+        setIsShortRunning(true);
+      } else {
+        setIsLongRunning(true);
+      }
+      return;
+    }
+  };
+
+  const handleNext = () => {
+    if (backgroundColor === "FocusBackground") {
+      if (roundText === 4) {
+        handleLongClick();
+        return;
+      }
+      handleShortClick();
+    } else if (backgroundColor === "ShortBackground") {
+      setRoundText((prev) => prev + 1);
+      handleFocusClick();
+    } else {
+      handleFocusClick();
+      if (pomoText < totalPomos - 1) {
+        setPomoText((prev) => prev + 1);
+        setRoundText(1);
+      } else {
+        let index = Todos.indexOf(currentTodo);
+        if (index === Todos.length - 1) {
+          window.alert("Hurray, All tasks are finished. Go have some fun!!");
+        } else {
+          setCurrentTodo(Todos[index + 1]);
+          setPomoText(0);
+          setRoundText(1);
+        }
+      }
+    }
+  };
+
+  const handleTodoClick = (todo) => {
+    setCurrentTodo(todo);
+    setText("Time to focus!");
+    setRoundText(1);
   };
 
   return (
@@ -104,12 +330,27 @@ const Home = () => {
                   Long Break
                 </button>
               </div>
-              <h1 className="Time">{displayTime}</h1>
+              <h1 className="Time">
+                {displayMinutes}:{displaySeconds}
+              </h1>
             </div>
             <div className="">{text}</div>
             <div>
-              <button className={startButton}>Start</button>
+              <button className={startButton} onClick={handleStart}>
+                {buttonText}
+              </button>
+              <button className="nextButton" onClick={handleNext}>
+                <AiFillStepForward />
+              </button>
             </div>
+            {currentTodo !== "" && (
+              <div className="currentTodo">
+                <p className="roundText">#{roundText}</p>
+                <h6 className="roundTodoText">
+                  {currentTodo} ({pomoText}/{totalPomos})
+                </h6>
+              </div>
+            )}
           </div>
           <hr />
           <div>
@@ -117,7 +358,16 @@ const Home = () => {
 
             <div className="todos">
               {Todos &&
-                Todos.map((todo) => <div className="todo"> {todo} </div>)}
+                Todos.map((todo, index) => (
+                  <div
+                    key={index}
+                    className="todo"
+                    onClick={() => handleTodoClick(todo)}
+                  >
+                    {" "}
+                    {todo}{" "}
+                  </div>
+                ))}
             </div>
 
             {showPopup && (
