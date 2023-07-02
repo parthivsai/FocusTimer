@@ -1,4 +1,5 @@
 .outerContainer {
+  position: relative;
   margin-left: 25%;
   margin-right: 25%;
 
@@ -6,6 +7,7 @@
 
   padding-top: 2%;
   padding-bottom: 2%;
+  z-index: 1;
 }
 .middleContainer {
   text-align: center;
@@ -13,12 +15,18 @@
 
 .FocusBackground {
   background-color: rgb(186, 73, 73);
+  position: relative;
+  z-index: 1;
 }
 .ShortBackground {
   background-color: rgb(56, 133, 138);
+  position: relative;
+  z-index: 1;
 }
 .LongBackground {
   background-color: rgb(57, 112, 151);
+  position: relative;
+  z-index: 1;
 }
 .reportButton,
 .settingsButton {

@@ -1,13 +1,18 @@
 import "./Home.css";
 import { BsFillCheckCircleFill } from "react-icons/bs";
-import { HiDocumentReport } from "react-icons/hi";
+// import { HiDocumentReport } from "react-icons/hi";
 import { IoIosSettings } from "react-icons/io";
 import { AiFillStepForward } from "react-icons/ai";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import AddTodo from "../AddTodo/AddTodo";
+import Settings from "../Settings/Settings";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const [showPopup, setShowPopup] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   const [focusButton, setFocusButton] = useState("Clicked");
   const [shortButton, setShortButton] = useState("default");
@@ -39,9 +44,15 @@ const Home = () => {
   const [currentPomValue, setCurrentPomValue] = useState(0);
   const [roundText, setRoundText] = useState(1);
   const [pomoText, setPomoText] = useState(0);
-  const [totalPomos, setTotalPomos] = useState(2);
 
   const [finishedTodos, setFinishedTodos] = useState([]);
+
+  // Settings State values
+  const [autoPomo, setAutoPomo] = useState(true);
+  const [autoBreak, setAutoBreak] = useState(true);
+  const [focusLength, setFocusLength] = useState(25);
+  const [shortLength, setShortLength] = useState(5);
+  const [longLength, setLongLength] = useState(15);
 
   const handleTodo = (todo, value) => {
     if (!Todos.includes(todo)) {
@@ -58,9 +69,10 @@ const Home = () => {
   const handleFocusClick = () => {
     setIsShortRunning(false);
     setIsLongRunning(false);
+    setDisplaySeconds("00");
+    setDisplayMinutes(focusLength.toString());
+    console.log("In handleFocusClick()");
     if (backgroundColor !== "FocusBackground") {
-      setDisplaySeconds("00");
-      setDisplayMinutes(time.Focus);
       setBackgroundColor("FocusBackground");
       setText("Time to focus!");
       setButtonText("Start");
@@ -76,7 +88,7 @@ const Home = () => {
     setIsFocusRunning(false);
     setIsLongRunning(false);
     if (backgroundColor !== "ShortBackground") {
-      setDisplayMinutes(time.Short);
+      setDisplayMinutes(shortLength.toString());
       setDisplaySeconds("00");
       setButtonText("Start");
       setBackgroundColor("ShortBackground");
@@ -93,7 +105,7 @@ const Home = () => {
     setIsFocusRunning(false);
     setIsShortRunning(false);
     if (backgroundColor !== "LongBackground") {
-      setDisplayMinutes(time.Long);
+      setDisplayMinutes(longLength.toString());
       setDisplaySeconds("00");
       setButtonText("Start");
       setBackgroundColor("LongBackground");
@@ -312,6 +324,28 @@ const Home = () => {
     setRoundText(1);
   };
 
+  const handleSave = (
+    focusLength,
+    shortLength,
+    longLength,
+    autoPomo,
+    autoBreak
+  ) => {
+    setFocusLength(focusLength);
+    setShortLength(shortLength);
+    setLongLength(longLength);
+    setAutoPomo(!autoPomo);
+    setAutoBreak(!autoBreak);
+    console.log(focusLength, shortLength, longLength, autoPomo, autoBreak);
+    if (backgroundColor === "FocusBackground") {
+      setDisplayMinutes(focusLength);
+    } else if (backgroundColor === "ShortBackground") {
+      setDisplayMinutes(shortLength);
+    } else {
+      setDisplayMinutes(longLength);
+    }
+  };
+
   return (
     <div className={backgroundColor}>
       <div className="outerContainer">
@@ -322,12 +356,21 @@ const Home = () => {
             </h4>
           </div>
           <div>
-            <button className="reportButton">
+            {/* <button className="reportButton">
               <HiDocumentReport /> Report
-            </button>
-            <button className="settingsButton">
+            </button> */}
+            <button
+              className="settingsButton"
+              onClick={() => setShowSettings(true)}
+            >
               <IoIosSettings /> Settings
             </button>
+            {showSettings && (
+              <Settings
+                handleSave={handleSave}
+                onClose={() => setShowSettings(false)}
+              />
+            )}
           </div>
         </div>
         <hr />
