@@ -59,6 +59,7 @@ const Settings = (props) => {
                   min="25"
                   max="45"
                   defaultValue="25"
+                  className="inputField"
                   onChange={handleFocusLength}
                 />
               </div>
@@ -69,6 +70,7 @@ const Settings = (props) => {
                   min="5"
                   max="15"
                   defaultValue="5"
+                  className="inputField"
                   onChange={handleShortLength}
                 />
               </div>
@@ -79,6 +81,7 @@ const Settings = (props) => {
                   min="15"
                   max="30"
                   defaultValue="15"
+                  className="inputField"
                   onChange={handleLongLength}
                 />
               </div>

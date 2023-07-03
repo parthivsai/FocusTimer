@@ -4,13 +4,10 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IoIosSettings } from "react-icons/io";
 import { AiFillStepForward } from "react-icons/ai";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import AddTodo from "../AddTodo/AddTodo";
 import Settings from "../Settings/Settings";
 
 const Home = () => {
-  const navigate = useNavigate();
-
   const [showPopup, setShowPopup] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
@@ -34,9 +31,8 @@ const Home = () => {
 
   const [buttonText, setButtonText] = useState("Start");
 
-  let todoList = ["Work on the project"];
-  let valueList = [2];
-  let time = { Focus: "25", Short: "5", Long: "15" };
+  let todoList = [];
+  let valueList = [];
 
   const [Todos, setTodos] = useState(todoList);
   const [pomValues, setPomValues] = useState(valueList);
@@ -128,13 +124,17 @@ const Home = () => {
           if (minutes === 0) {
             if (roundText === 4) {
               handleLongClick();
-              setIsLongRunning(true);
-              setAddButton("Pause");
+              if (autoBreak) {
+                setIsLongRunning(true);
+                setAddButton("Pause");
+              }
               return;
             }
             handleShortClick();
-            setIsShortRunning(true);
-            setAddButton("Pause");
+            if (autoBreak) {
+              setIsShortRunning(true);
+              setAddButton("Pause");
+            }
             return;
           }
           minutes -= 1;
@@ -208,8 +208,10 @@ const Home = () => {
           if (minutes === 0) {
             handleFocusClick();
             setRoundText(1);
-            setIsFocusRunning(true);
-            setAddButton("Pause");
+            if (autoPomo) {
+              setIsFocusRunning(true);
+              setAddButton("Pause");
+            }
             // Checking if the set amount of pomo's is reached or not, if reached change it to next to do, else increase the pomocount
             if (pomoText < currentPomValue - 1) {
               setPomoText((prev) => prev + 1);

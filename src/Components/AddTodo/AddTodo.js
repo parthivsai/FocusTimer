@@ -37,7 +37,7 @@ const AddTodo = (props) => {
           className="textInput"
         />
         <div className="PopupTopSecondLayer">
-          <h6 class="headingtext">Pomos</h6>
+          <h6 className="headingtext">Pomos</h6>
           <input
             type="number"
             placeholder="0"
@@ -50,10 +50,10 @@ const AddTodo = (props) => {
       </div>
       <div className="popupFooter">
         <div className="Buttons">
-          <button className="btn btn-light closeButton" onClick={handleClose}>
+          <button className="btn btn-light csButton" onClick={handleClose}>
             Close
           </button>
-          <button className="btn btn-dark saveButton" onClick={handleSave}>
+          <button className="btn btn-dark" onClick={handleSave}>
             Save
           </button>
         </div>
