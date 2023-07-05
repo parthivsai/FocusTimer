@@ -337,8 +337,8 @@ const Home = () => {
     setFocusLength(focusLength);
     setShortLength(shortLength);
     setLongLength(longLength);
-    setAutoPomo(!autoPomo);
-    setAutoBreak(!autoBreak);
+    setAutoPomo(autoPomo);
+    setAutoBreak(autoBreak);
     console.log(focusLength, shortLength, longLength, autoPomo, autoBreak);
     if (backgroundColor === "FocusBackground") {
       setDisplayMinutes(focusLength);
@@ -388,6 +388,11 @@ const Home = () => {
                 createPortal(
                   <Settings
                     handleSave={handleSave}
+                    focusLength={focusLength}
+                    shortLength={shortLength}
+                    longLength={longLength}
+                    autoBreak={autoBreak}
+                    autoPomo={autoPomo}
                     onClose={() => setShowSettings(false)}
                   />,
                   document.getElementById("root")
@@ -439,33 +444,32 @@ const Home = () => {
             <div className="todos">
               {finishedTodos &&
                 finishedTodos.map((todo, index) => (
-                  <div
-                    key={index}
-                    className="finishedTodo"
-                    onClick={() => handleTodoClick(todo, index)}
-                  >
+                  <div key={index} className="finishedTodo">
                     {" "}
                     <s>{todo}</s>{" "}
                   </div>
                 ))}
+
               {Todos &&
                 Todos.map(
                   (todo, index) =>
                     !finishedTodos.includes(todo) && (
-                      <div
-                        key={index}
-                        className="todo"
-                        onClick={() => handleTodoClick(todo, index)}
-                      >
-                        {" "}
-                        {todo}{" "}
-                        <button
-                          className="deleteButton"
-                          onClick={() => handleDelete(index)}
+                      <div>
+                        <div
+                          key={index}
+                          className="todo"
+                          onClick={() => handleTodoClick(todo, index)}
                         >
                           {" "}
-                          x{" "}
-                        </button>
+                          {todo}{" "}
+                          <button
+                            className="deleteButton"
+                            onClick={() => handleDelete(index)}
+                          >
+                            {" "}
+                            x{" "}
+                          </button>
+                        </div>
                       </div>
                     )
                 )}

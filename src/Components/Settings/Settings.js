@@ -1,15 +1,13 @@
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-// import { createPortal } from "react-dom";
 import { useState } from "react";
 import "./Settings.css";
 
 const Settings = (props) => {
-  const [autoPomo, setAutoPomo] = useState(false);
-  const [autoBreak, setAutoBreak] = useState(false);
-  const [focusLength, setFocusLength] = useState(25);
-  const [shortLength, setShortLength] = useState(5);
-  const [longLength, setLongLength] = useState(15);
-  // const [mode, setMode] = useState("");
+  const [autoPomo, setAutoPomo] = useState(props.autoPomo);
+  const [autoBreak, setAutoBreak] = useState(props.autoBreak);
+  const [focusLength, setFocusLength] = useState(props.focusLength);
+  const [shortLength, setShortLength] = useState(props.shortLength);
+  const [longLength, setLongLength] = useState(props.longLength);
 
   const handleAutoPomo = () => {
     setAutoPomo((prev) => !prev);
@@ -60,7 +58,7 @@ const Settings = (props) => {
                   type="number"
                   min="25"
                   max="45"
-                  defaultValue="25"
+                  defaultValue={focusLength}
                   className="inputField"
                   onChange={handleFocusLength}
                 />
@@ -71,7 +69,7 @@ const Settings = (props) => {
                   type="number"
                   min="5"
                   max="15"
-                  defaultValue="5"
+                  defaultValue={shortLength}
                   className="inputField"
                   onChange={handleShortLength}
                 />
@@ -82,7 +80,7 @@ const Settings = (props) => {
                   type="number"
                   min="15"
                   max="30"
-                  defaultValue="15"
+                  defaultValue={longLength}
                   className="inputField"
                   onChange={handleLongLength}
                 />
@@ -91,16 +89,14 @@ const Settings = (props) => {
             <div className="toggleSwitches">
               <ToggleSwitch
                 label="Auto Start Pomos"
+                defaultValue={autoPomo}
                 isChecked={handleAutoPomo}
               />
               <ToggleSwitch
                 label="Auto Start Breaks"
+                defaultValue={autoBreak}
                 isChecked={handleAutoBreak}
               />
-              {/* <ToggleSwitch
-                label="Enable dark mode"
-                isChecked={handleEnableDarkMode}
-              /> */}
             </div>
           </div>
           <hr />

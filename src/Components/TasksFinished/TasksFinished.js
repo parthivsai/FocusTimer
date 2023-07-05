@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import Confetti from "react-confetti";
 import "./TasksFinished.css";
 
-const TasksFinished = (props) => {
+const TasksFinished = () => {
   const [displayConfetti, setDisplayConfetti] = useState(true);
 
   const [windowSize, setWindowSize] = useState({
@@ -29,7 +29,6 @@ const TasksFinished = (props) => {
 
   return createPortal(
     <>
-      {/* <div className="overLay" /> */}
       {displayConfetti && (
         <Confetti
           className="Confetti"
@@ -47,8 +46,6 @@ const TasksFinished = (props) => {
         </div>
         <hr />
         <div className="footer">
-          {/* <img src="Githublink" alt="GithubLink" height={2} width={2} />
-          <img src="LinkedIn" alt="LinkedInLink" height={2} width={2} /> */}
           <h5> Made by Parthiv </h5>
           <div className="Links">
             <a

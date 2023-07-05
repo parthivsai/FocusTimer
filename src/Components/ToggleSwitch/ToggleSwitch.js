@@ -8,7 +8,7 @@ const ToggleSwitch = (props) => {
         <input
           type="checkbox"
           className="checkbox"
-          defaultChecked="true"
+          defaultChecked={props.defaultValue}
           name={props.label}
           id={props.label}
           onChange={props.isChecked}
