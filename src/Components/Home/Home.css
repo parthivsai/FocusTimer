@@ -270,3 +270,18 @@
 .roundTodoText {
   margin-top: 2px;
 }
+
+.deleteButton {
+  float: right;
+  background: none;
+  color: white;
+  border: none;
+  text-align: center;
+  margin-right: 5px !important;
+  transition: transform 0.2;
+  margin: auto;
+}
+
+.deleteButton:hover {
+  transform: scale(1.2);
+}

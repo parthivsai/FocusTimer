@@ -1,0 +1,36 @@
+.task {
+  position: absolute !important;
+  width: 30%;
+  margin-top: 0vh;
+  margin-bottom: 0vh;
+  /* top: 20vh; */
+  /* bottom: 22vh; */
+  /* right: 25vh; */
+  /* left: 25vh; */
+  justify-content: center;
+  background-color: black;
+  padding: 20px;
+}
+
+.headingText {
+  text-align: center;
+  margin-top: 0px;
+}
+
+.body {
+  padding: 15px;
+  text-align: center;
+}
+
+.footer {
+  margin: auto;
+  height: 20px;
+  padding: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.github {
+  margin-right: 10px;
+}

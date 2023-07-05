@@ -1,5 +1,5 @@
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import { createPortal } from "react-dom";
+// import { createPortal } from "react-dom";
 import { useState } from "react";
 import "./Settings.css";
 
@@ -9,6 +9,7 @@ const Settings = (props) => {
   const [focusLength, setFocusLength] = useState(25);
   const [shortLength, setShortLength] = useState(5);
   const [longLength, setLongLength] = useState(15);
+  // const [mode, setMode] = useState("");
 
   const handleAutoPomo = () => {
     setAutoPomo((prev) => !prev);
@@ -35,7 +36,8 @@ const Settings = (props) => {
     props.handleSave(focusLength, shortLength, longLength, autoPomo, autoBreak);
     props.onClose();
   };
-  return createPortal(
+
+  return (
     <>
       <div className="overLay" />
       <div className="card">
@@ -95,6 +97,10 @@ const Settings = (props) => {
                 label="Auto Start Breaks"
                 isChecked={handleAutoBreak}
               />
+              {/* <ToggleSwitch
+                label="Enable dark mode"
+                isChecked={handleEnableDarkMode}
+              /> */}
             </div>
           </div>
           <hr />
@@ -105,8 +111,7 @@ const Settings = (props) => {
           </div>
         </div>
       </div>
-    </>,
-    document.getElementById("root")
+    </>
   );
 };
 export default Settings;

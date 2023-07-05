@@ -9,11 +9,16 @@
 }
 
 .card {
-  position: absolute;
+  position: absolute !important;
   width: 40%;
-  margin: auto;
   margin-top: 25vh;
   margin-bottom: 25vh;
+  margin: auto;
+  top: 25vh;
+  bottom: 25vh;
+  right: 25vh;
+  left: 25vh;
+
   background-color: rgb(247, 241, 241);
   font-family: sans-serif;
   z-index: 10;

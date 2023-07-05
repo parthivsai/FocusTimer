@@ -6,6 +6,8 @@ import { AiFillStepForward } from "react-icons/ai";
 import { useState, useEffect } from "react";
 import AddTodo from "../AddTodo/AddTodo";
 import Settings from "../Settings/Settings";
+import { createPortal } from "react-dom";
+import TasksFinished from "../TasksFinished/TasksFinished";
 
 const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -40,6 +42,7 @@ const Home = () => {
   const [currentPomValue, setCurrentPomValue] = useState(0);
   const [roundText, setRoundText] = useState(1);
   const [pomoText, setPomoText] = useState(0);
+  const [finishedTasks, setFinishedTasks] = useState(false);
 
   const [finishedTodos, setFinishedTodos] = useState([]);
 
@@ -222,9 +225,7 @@ const Home = () => {
 
               // checking if this is the last todo or not and executing accordingly
               if (index === Todos.length - 1) {
-                window.alert(
-                  "Hurray, All tasks are finished. Go have some fun!!"
-                );
+                setFinishedTasks(true);
               } else {
                 setCurrentTodo(Todos[index + 1]);
                 setCurrentPomValue(pomValues[index + 1]);
@@ -308,7 +309,7 @@ const Home = () => {
         setFinishedTodos((prev) => [...prev, Todos[index]]);
         if (index === Todos.length - 1) {
           setPomoText((prev) => prev + 1);
-          window.alert("Hurray, All tasks are finished. Go have some fun!!");
+          setFinishedTasks(true);
         } else {
           setCurrentTodo(Todos[index + 1]);
           setCurrentPomValue(pomValues[index + 1]);
@@ -348,9 +349,24 @@ const Home = () => {
     }
   };
 
+  const handleDelete = (index) => {
+    let templst = Todos;
+    let temppomplst = pomValues;
+    templst.splice(index, 1);
+    temppomplst.splice(index, 1);
+    console.log(templst, temppomplst);
+    setTodos(templst);
+    setPomValues(temppomplst);
+  };
+
+  // const handleFinishedTasks = (flag) => {
+  //    setFinishedTasks(false);
+  // }
+
   return (
     <div className={backgroundColor}>
       <div className="outerContainer">
+        {finishedTasks && <TasksFinished />}
         <div className="TopContainer">
           <div>
             <h4>
@@ -367,12 +383,16 @@ const Home = () => {
             >
               <IoIosSettings /> Settings
             </button>
-            {showSettings && (
-              <Settings
-                handleSave={handleSave}
-                onClose={() => setShowSettings(false)}
-              />
-            )}
+            <div className="portaldiv">
+              {showSettings &&
+                createPortal(
+                  <Settings
+                    handleSave={handleSave}
+                    onClose={() => setShowSettings(false)}
+                  />,
+                  document.getElementById("root")
+                )}
+            </div>
           </div>
         </div>
         <hr />
@@ -439,6 +459,13 @@ const Home = () => {
                       >
                         {" "}
                         {todo}{" "}
+                        <button
+                          className="deleteButton"
+                          onClick={() => handleDelete(index)}
+                        >
+                          {" "}
+                          x{" "}
+                        </button>
                       </div>
                     )
                 )}
