@@ -177,16 +177,21 @@
   margin-bottom: 5px;
 }
 
-.todo {
+.todosParent {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-end;
   background: none rgba(255, 255, 255, 0.2);
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-  margin: 5px;
   font-family: ArialRounded;
   border-radius: 4px;
   transition: background 0.3s, box-shadow 0.3s;
+  margin-bottom: 5px;
 }
 
-.todo:hover {
+.todosParent:hover {
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
 }
@@ -272,16 +277,20 @@
 }
 
 .deleteButton {
-  float: right;
+  right: 0;
+  position: absolute;
   background: none;
   color: white;
   border: none;
-  text-align: center;
-  margin-right: 5px !important;
   transition: transform 0.2;
-  margin: auto;
+  margin-right: 5px;
 }
 
 .deleteButton:hover {
   transform: scale(1.2);
+}
+
+.todo {
+  margin: auto;
+  width: 100%;
 }

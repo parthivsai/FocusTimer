@@ -8,6 +8,7 @@ import AddTodo from "../AddTodo/AddTodo";
 import Settings from "../Settings/Settings";
 import { createPortal } from "react-dom";
 import TasksFinished from "../TasksFinished/TasksFinished";
+import { v4 } from "uuid";
 
 const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -33,11 +34,8 @@ const Home = () => {
 
   const [buttonText, setButtonText] = useState("Start");
 
-  let todoList = [];
-  let valueList = [];
-
-  const [Todos, setTodos] = useState(todoList);
-  const [pomValues, setPomValues] = useState(valueList);
+  const [Todos, setTodos] = useState([]);
+  // const [pomValues, setPomValues] = useState(valueList);
   const [currentTodo, setCurrentTodo] = useState("");
   const [currentPomValue, setCurrentPomValue] = useState(0);
   const [roundText, setRoundText] = useState(1);
@@ -54,9 +52,8 @@ const Home = () => {
   const [longLength, setLongLength] = useState(15);
 
   const handleTodo = (todo, value) => {
-    if (!Todos.includes(todo)) {
-      setTodos((prev) => [...prev, todo]);
-      setPomValues((prev) => [...prev, value]);
+    if (!Todos.includes({ name: todo, value: value })) {
+      setTodos((prev) => [...prev, { id: v4(), name: todo, value: value }]);
     }
   };
 
@@ -228,7 +225,7 @@ const Home = () => {
                 setFinishedTasks(true);
               } else {
                 setCurrentTodo(Todos[index + 1]);
-                setCurrentPomValue(pomValues[index + 1]);
+                setCurrentPomValue(currentTodo.value);
                 setRoundText(1);
                 setPomoText(0);
               }
@@ -312,7 +309,7 @@ const Home = () => {
           setFinishedTasks(true);
         } else {
           setCurrentTodo(Todos[index + 1]);
-          setCurrentPomValue(pomValues[index + 1]);
+          setCurrentPomValue(currentTodo.value);
           setPomoText(0);
           setRoundText(1);
         }
@@ -320,9 +317,10 @@ const Home = () => {
     }
   };
 
-  const handleTodoClick = (todo, index) => {
+  const handleTodoClick = (todo) => {
+    console.log("You clicked the todo :" + todo.name);
     setCurrentTodo(todo);
-    setCurrentPomValue(pomValues[index]);
+    setCurrentPomValue(todo.value);
     setText("Time to focus!");
     setRoundText(1);
   };
@@ -349,24 +347,33 @@ const Home = () => {
     }
   };
 
-  const handleDelete = (index) => {
-    let templst = Todos;
-    let temppomplst = pomValues;
-    templst.splice(index, 1);
-    temppomplst.splice(index, 1);
-    console.log(templst, temppomplst);
-    setTodos(templst);
-    setPomValues(temppomplst);
+  const handleDelete = (id) => {
+    const temp = Todos.filter((todo) => todo.id !== id);
+    setTodos(temp);
   };
 
-  // const handleFinishedTasks = (flag) => {
-  //    setFinishedTasks(false);
-  // }
+  const handleResetClick = (flag) => {
+    if (flag) {
+      setText("Time to focus!");
+
+      setButtonText("Start");
+
+      setTodos([]);
+
+      setCurrentTodo("");
+      setCurrentPomValue(0);
+      setRoundText(1);
+      setPomoText(0);
+      setFinishedTasks(false);
+
+      setFinishedTodos([]);
+    }
+  };
 
   return (
     <div className={backgroundColor}>
       <div className="outerContainer">
-        {finishedTasks && <TasksFinished />}
+        {finishedTasks && <TasksFinished handleResetClick={handleResetClick} />}
         <div className="TopContainer">
           <div>
             <h4>
@@ -428,11 +435,11 @@ const Home = () => {
                 <AiFillStepForward />
               </button>
             </div>
-            {currentTodo !== "" && (
+            {currentTodo.name && (
               <div className="currentTodo">
                 <p className="roundText">#{roundText}</p>
                 <h6 className="roundTodoText">
-                  {currentTodo} ({pomoText}/{currentPomValue})
+                  {currentTodo.name} ({pomoText}/{currentPomValue})
                 </h6>
               </div>
             )}
@@ -443,28 +450,30 @@ const Home = () => {
 
             <div className="todos">
               {finishedTodos &&
-                finishedTodos.map((todo, index) => (
-                  <div key={index} className="finishedTodo">
+                finishedTodos.map((todo) => (
+                  <div key={todo.id} className="finishedTodo">
                     {" "}
-                    <s>{todo}</s>{" "}
+                    <s>{todo.name}</s>{" "}
                   </div>
                 ))}
 
               {Todos &&
                 Todos.map(
-                  (todo, index) =>
+                  (todo) =>
                     !finishedTodos.includes(todo) && (
-                      <div>
+                      <div key={todo.id} className="todosParent">
                         <div
-                          key={index}
                           className="todo"
-                          onClick={() => handleTodoClick(todo, index)}
+                          onClick={() => handleTodoClick(todo)}
                         >
                           {" "}
-                          {todo}{" "}
+                          {todo.name}{" "}
+                        </div>
+                        <div>
+                          {" "}
                           <button
                             className="deleteButton"
-                            onClick={() => handleDelete(index)}
+                            onClick={() => handleDelete(todo.id)}
                           >
                             {" "}
                             x{" "}

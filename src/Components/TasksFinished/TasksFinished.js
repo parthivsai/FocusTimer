@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import Confetti from "react-confetti";
 import "./TasksFinished.css";
 
-const TasksFinished = () => {
+const TasksFinished = (props) => {
   const [displayConfetti, setDisplayConfetti] = useState(true);
 
   const [windowSize, setWindowSize] = useState({
@@ -29,6 +29,7 @@ const TasksFinished = () => {
 
   return createPortal(
     <>
+      <div className="overLay" onClick={() => props.handleResetClick(true)} />
       {displayConfetti && (
         <Confetti
           className="Confetti"
