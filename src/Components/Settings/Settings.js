@@ -3,26 +3,25 @@ import { useState } from "react";
 import "./Settings.css";
 
 const Settings = (props) => {
+  // States for all the required fields
   const [autoPomo, setAutoPomo] = useState(props.autoPomo);
   const [autoBreak, setAutoBreak] = useState(props.autoBreak);
   const [focusLength, setFocusLength] = useState(props.focusLength);
   const [shortLength, setShortLength] = useState(props.shortLength);
   const [longLength, setLongLength] = useState(props.longLength);
 
+  // handling field changes
   const handleAutoPomo = () => {
     setAutoPomo((prev) => !prev);
     console.log("Autopomo changed to : " + autoPomo);
   };
-
   const handleAutoBreak = () => {
     setAutoBreak((prev) => !prev);
     console.log("AutoBreak changed to : " + autoBreak);
   };
-
   const handleFocusLength = (event) => {
     setFocusLength(event.target.value);
   };
-
   const handleShortLength = (event) => {
     setShortLength(event.target.value);
   };
@@ -30,6 +29,7 @@ const Settings = (props) => {
     setLongLength(event.target.value);
   };
 
+  // handling save click and popup closing functionality
   const handleSave = () => {
     props.handleSave(focusLength, shortLength, longLength, autoPomo, autoBreak);
     props.onClose();
@@ -110,4 +110,5 @@ const Settings = (props) => {
     </>
   );
 };
+
 export default Settings;

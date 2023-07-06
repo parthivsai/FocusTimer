@@ -7,6 +7,7 @@ import "./TasksFinished.css";
 const TasksFinished = (props) => {
   const [displayConfetti, setDisplayConfetti] = useState(true);
 
+  // windowSize state for getting the screen width and height for handling confetti dimentions
   const [windowSize, setWindowSize] = useState({
     width: undefined,
     height: undefined,
@@ -21,6 +22,7 @@ const TasksFinished = (props) => {
 
   useEffect(() => {
     window.onresize = () => handleWindowSize;
+    // showing the confetti celebrations for 10 seconds
     const timer = setTimeout(() => {
       setDisplayConfetti(false);
     }, 10000);

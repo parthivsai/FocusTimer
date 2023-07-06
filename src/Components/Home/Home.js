@@ -1,47 +1,56 @@
-import "./Home.css";
-import { BsFillCheckCircleFill } from "react-icons/bs";
-// import { HiDocumentReport } from "react-icons/hi";
-import { IoIosSettings } from "react-icons/io";
-import { AiFillStepForward } from "react-icons/ai";
 import { useState, useEffect } from "react";
-import AddTodo from "../AddTodo/AddTodo";
-import Settings from "../Settings/Settings";
+
+// using react-dom createPortal for Settings Page and Task Finished Page
 import { createPortal } from "react-dom";
-import TasksFinished from "../TasksFinished/TasksFinished";
+
+// importing v4 from uuid for generating unique ids
 import { v4 } from "uuid";
 
+// importing required icons
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { IoIosSettings } from "react-icons/io";
+import { AiFillStepForward } from "react-icons/ai";
+
+import AddTodo from "../AddTodo/AddTodo";
+import Settings from "../Settings/Settings";
+import TasksFinished from "../TasksFinished/TasksFinished";
+
+import "./Home.css";
+
 const Home = () => {
+  // States for Add and Settings popup
   const [showPopup, setShowPopup] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
+  // Initializing default state values for required states
   const [focusButton, setFocusButton] = useState("Clicked");
   const [shortButton, setShortButton] = useState("default");
   const [longButton, setLongButton] = useState("default");
-
   const [startButton, setStartButton] = useState("FocusStart");
   const [addButton, setAddButton] = useState("FocusAdd");
-
   const [backgroundColor, setBackgroundColor] = useState("FocusBackground");
 
   const [displayMinutes, setDisplayMinutes] = useState("25");
   const [displaySeconds, setDisplaySeconds] = useState("00");
 
+  // Maintaining isRunning state for all the three scenarios
   const [isFocusRunning, setIsFocusRunning] = useState(false);
   const [isShortRunning, setIsShortRunning] = useState(false);
   const [isLongRunning, setIsLongRunning] = useState(false);
 
   const [text, setText] = useState("Time to focus!");
-
   const [buttonText, setButtonText] = useState("Start");
 
   const [Todos, setTodos] = useState([]);
-  // const [pomValues, setPomValues] = useState(valueList);
   const [currentTodo, setCurrentTodo] = useState("");
   const [currentPomValue, setCurrentPomValue] = useState(0);
   const [roundText, setRoundText] = useState(1);
   const [pomoText, setPomoText] = useState(0);
+
+  // State for checking if all tasks are done
   const [finishedTasks, setFinishedTasks] = useState(false);
 
+  // State for holding finished Todo's
   const [finishedTodos, setFinishedTodos] = useState([]);
 
   // Settings State values
@@ -51,23 +60,24 @@ const Home = () => {
   const [shortLength, setShortLength] = useState(5);
   const [longLength, setLongLength] = useState(15);
 
+  // Adding new Todos which are coming from AddTodo component
   const handleTodo = (todo, value) => {
     if (!Todos.includes({ name: todo, value: value })) {
       setTodos((prev) => [...prev, { id: v4(), name: todo, value: value }]);
     }
   };
 
+  // handling the Settings popup
   const handlePopup = (flag) => {
-    console.log("In Home and the popup value is: " + flag);
     setShowPopup(flag);
   };
 
+  // Focus, Short, Long  button's click functionalities
   const handleFocusClick = () => {
     setIsShortRunning(false);
     setIsLongRunning(false);
     setDisplaySeconds("00");
     setDisplayMinutes(focusLength.toString());
-    console.log("In handleFocusClick()");
     if (backgroundColor !== "FocusBackground") {
       setBackgroundColor("FocusBackground");
       setText("Time to focus!");
@@ -114,6 +124,7 @@ const Home = () => {
     }
   };
 
+  // Time changing functionality while focus timer is running
   useEffect(() => {
     let timer;
     if (isFocusRunning) {
@@ -124,16 +135,18 @@ const Home = () => {
           if (minutes === 0) {
             if (roundText === 4) {
               handleLongClick();
+              setAddButton("LongAdd");
               if (autoBreak) {
                 setIsLongRunning(true);
-                setAddButton("Pause");
+                setButtonText("Pause");
               }
               return;
             }
             handleShortClick();
+            setAddButton("ShortAdd");
             if (autoBreak) {
               setIsShortRunning(true);
-              setAddButton("Pause");
+              setButtonText("Pause");
             }
             return;
           }
@@ -142,7 +155,7 @@ const Home = () => {
         } else {
           seconds -= 1;
         }
-        console.log("minutes: " + minutes, "Seconds: " + seconds);
+        // Adding "0" before the single digit for single digit numbers
         let minString = minutes.toString();
         if (minString.length === 1) {
           minString = "0" + minString;
@@ -151,6 +164,7 @@ const Home = () => {
         if (secString.length === 1) {
           secString = "0" + secString;
         }
+        // Setting the final values in respective states after every second
         setDisplayMinutes(minString);
         setDisplaySeconds(secString);
       }, 1000);
@@ -160,6 +174,7 @@ const Home = () => {
     };
   }, [isFocusRunning]);
 
+  // Time changing functionality while short timer is running
   useEffect(() => {
     let timer;
     if (isShortRunning) {
@@ -171,16 +186,16 @@ const Home = () => {
             setRoundText((prev) => prev + 1);
             handleFocusClick();
             setIsFocusRunning(true);
-            setAddButton("Pause");
+            setAddButton("FocusAdd");
+            setButtonText("Pause");
             return;
           }
-          // change seconds to 00 and reduce minutes by 1
           minutes -= 1;
           seconds = 59;
         } else {
           seconds -= 1;
         }
-        console.log("minutes: " + minutes, "Seconds: " + seconds);
+        // Adding "0" before the single digit for single digit numbers
         let minString = minutes.toString();
         if (minString.length === 1) {
           minString = "0" + minString;
@@ -189,6 +204,7 @@ const Home = () => {
         if (secString.length === 1) {
           secString = "0" + secString;
         }
+        // Setting the final values in respective states after every second
         setDisplayMinutes(minString);
         setDisplaySeconds(secString);
       }, 1000);
@@ -198,6 +214,7 @@ const Home = () => {
     };
   }, [isShortRunning]);
 
+  // Time changing functionality while long timer is running
   useEffect(() => {
     let timer;
     let minutes = parseInt(displayMinutes, 10);
@@ -207,10 +224,11 @@ const Home = () => {
         if (seconds === 0) {
           if (minutes === 0) {
             handleFocusClick();
+            setAddButton("FocusAdd");
             setRoundText(1);
             if (autoPomo) {
               setIsFocusRunning(true);
-              setAddButton("Pause");
+              setButtonText("Pause");
             }
             // Checking if the set amount of pomo's is reached or not, if reached change it to next to do, else increase the pomocount
             if (pomoText < currentPomValue - 1) {
@@ -237,7 +255,7 @@ const Home = () => {
         } else {
           seconds -= 1;
         }
-        console.log("minutes: " + minutes, "Seconds: " + seconds);
+        // Adding "0" before the single digit for single digit numbers
         let minString = minutes.toString();
         if (minString.length === 1) {
           minString = "0" + minString;
@@ -246,6 +264,7 @@ const Home = () => {
         if (secString.length === 1) {
           secString = "0" + secString;
         }
+        // Setting the final values in respective states after every second
         setDisplayMinutes(minString);
         setDisplaySeconds(secString);
       }, 1000);
@@ -256,6 +275,7 @@ const Home = () => {
   }, [isLongRunning]);
 
   const handleStart = () => {
+    // changing isRunning state on clicking "Start" or "Pause" button
     if (buttonText === "Pause") {
       setButtonText("Start");
       if (startButton === "FocusStart") {
@@ -267,6 +287,7 @@ const Home = () => {
       }
       return;
     } else {
+      // checking if a particular Todo is selected or not
       if (currentTodo === "") {
         {
           setText("Select a Todo to work on!!");
@@ -286,28 +307,35 @@ const Home = () => {
     }
   };
 
+  // Skip button functionality
   const handleNext = () => {
     if (backgroundColor === "FocusBackground") {
+      // Focus Scenario
       if (roundText === 4) {
         handleLongClick();
         return;
       }
       handleShortClick();
     } else if (backgroundColor === "ShortBackground") {
+      // Short Scenario
       setRoundText((prev) => prev + 1);
       handleFocusClick();
     } else {
+      // Long Scenario
       handleFocusClick();
+      // if current pomodoro count is less than the given total count
       if (pomoText < currentPomValue - 1) {
         setPomoText((prev) => prev + 1);
         setRoundText(1);
       } else {
+        // if this is the last pomodoro of the last Todo then displaying TasksFinished page
         let index = Todos.indexOf(currentTodo);
         setFinishedTodos((prev) => [...prev, Todos[index]]);
         if (index === Todos.length - 1) {
           setPomoText((prev) => prev + 1);
           setFinishedTasks(true);
         } else {
+          // if there are some Todo's left
           setCurrentTodo(Todos[index + 1]);
           setCurrentPomValue(currentTodo.value);
           setPomoText(0);
@@ -317,14 +345,15 @@ const Home = () => {
     }
   };
 
+  // Selecting a Todo functionality
   const handleTodoClick = (todo) => {
-    console.log("You clicked the todo :" + todo.name);
     setCurrentTodo(todo);
     setCurrentPomValue(todo.value);
     setText("Time to focus!");
     setRoundText(1);
   };
 
+  // Save click functionality
   const handleSave = (
     focusLength,
     shortLength,
@@ -347,25 +376,24 @@ const Home = () => {
     }
   };
 
+  // Deleting a Todo functionality
   const handleDelete = (id) => {
     const temp = Todos.filter((todo) => todo.id !== id);
     setTodos(temp);
   };
 
+  // Clicking on the overlay of the AllTasksFinished Page for resetting the FocusTimer
   const handleResetClick = (flag) => {
+    // Changing all the states to their default values
     if (flag) {
       setText("Time to focus!");
-
       setButtonText("Start");
-
       setTodos([]);
-
       setCurrentTodo("");
       setCurrentPomValue(0);
       setRoundText(1);
       setPomoText(0);
       setFinishedTasks(false);
-
       setFinishedTodos([]);
     }
   };
@@ -373,7 +401,10 @@ const Home = () => {
   return (
     <div className={backgroundColor}>
       <div className="outerContainer">
+        {/* All Tasks Finished Page */}
         {finishedTasks && <TasksFinished handleResetClick={handleResetClick} />}
+
+        {/* Title and Settings Section */}
         <div className="TopContainer">
           <div>
             <h4>
@@ -381,9 +412,6 @@ const Home = () => {
             </h4>
           </div>
           <div>
-            {/* <button className="reportButton">
-              <HiDocumentReport /> Report
-            </button> */}
             <button
               className="settingsButton"
               onClick={() => setShowSettings(true)}
@@ -408,6 +436,7 @@ const Home = () => {
           </div>
         </div>
         <hr />
+        {/* Timer Section */}
         <div className="middleContainer">
           <div className="middleTop">
             <div className="TimerDisplay">
@@ -445,6 +474,8 @@ const Home = () => {
             )}
           </div>
           <hr />
+
+          {/* Todo's Section */}
           <div>
             <h2>ToDo's</h2>
 
@@ -483,7 +514,7 @@ const Home = () => {
                     )
                 )}
             </div>
-
+            {/* Add Todo Section */}
             {showPopup && (
               <div className="displayPopup">
                 <AddTodo handleTodo={handleTodo} handlePopup={handlePopup} />
@@ -494,8 +525,6 @@ const Home = () => {
             </button>
           </div>
         </div>
-        <br />
-        <div className="bottomContainer"></div>
       </div>
     </div>
   );
