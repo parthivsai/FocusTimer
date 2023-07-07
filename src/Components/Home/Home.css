@@ -3,7 +3,7 @@
   margin-right: 25%;
   color: white;
   padding-top: 2%;
-  padding-bottom: 4.4%;
+  padding-bottom: 2%;
 }
 
 .middleContainer {
@@ -12,15 +12,19 @@
 
 .FocusBackground {
   background-color: rgb(186, 73, 73);
+  min-height: 100vh;
 }
 
 .ShortBackground {
   background-color: rgb(56, 133, 138);
+  min-height: 100vh;
 }
 
 .LongBackground {
   background-color: rgb(57, 112, 151);
+  min-height: 100vh;
 }
+
 .reportButton,
 .settingsButton {
   border-radius: 4px;

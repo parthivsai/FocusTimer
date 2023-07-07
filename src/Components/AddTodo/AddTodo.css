@@ -1,5 +1,6 @@
 .popup {
   background-color: white;
+  position: relative;
   align-items: left;
 }
 .popupContent {

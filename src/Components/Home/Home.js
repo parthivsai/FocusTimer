@@ -398,6 +398,11 @@ const Home = () => {
     }
   };
 
+  // For mobile design
+  // useEffect(()=>{
+  //   if(window.innerWidth<"720px"){}
+  // },[window.innerWidth])
+
   return (
     <div className={backgroundColor}>
       <div className="outerContainer">
