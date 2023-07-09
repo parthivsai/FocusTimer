@@ -34,12 +34,22 @@
 
 .settingsText {
   float: left;
-  margin-left: 15px;
+  margin-left: 38%;
   margin-top: 10px;
+  text-align: center;
 }
 
 .FocusInput {
+  margin: 10px;
   margin-left: 0px;
+}
+
+.shortInput {
+  margin: 10px;
+}
+
+.longInput {
+  margin: 10px;
 }
 
 .BottomSection {
@@ -64,4 +74,45 @@
   right: 0;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 10;
+}
+
+.TimeText {
+  padding: 0;
+  margin-bottom: 0;
+}
+
+@media (max-width: 720px) {
+  .card {
+    min-width: 80% !important;
+  }
+  .toggleSwitches {
+    padding-top: 10px;
+    margin-left: 0%;
+  }
+  .autopomo {
+    margin-bottom: 10px !important;
+  }
+  .saveButton {
+    margin-left: 40%;
+  }
+  .FocusInput {
+    margin-left: 5%;
+  }
+  .shortInput {
+    margin-left: 1px;
+  }
+  .longInput {
+    margin-left: 1px;
+  }
+  .InputContainer {
+    margin-top: 0;
+  }
+  .TimeText {
+    margin-left: 5%;
+    padding: 0;
+    margin-bottom: 0;
+  }
+  .settingsText {
+    margin-top: 15px;
+  }
 }

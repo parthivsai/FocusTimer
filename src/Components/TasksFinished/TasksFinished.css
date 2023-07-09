@@ -5,7 +5,7 @@
   margin-bottom: 0vh;
   justify-content: center;
   background-color: black;
-  padding: 20px;
+  height: 60% !important;
 }
 
 .headingText {
@@ -39,4 +39,12 @@
   right: 0;
   background-color: rgba(0, 0, 0, 0.1);
   z-index: 10;
+}
+
+@media (max-width: 720px) {
+  .task {
+    height: auto;
+    padding: 10%;
+    padding-bottom: 20%;
+  }
 }

@@ -295,3 +295,56 @@
   margin: auto;
   width: 100%;
 }
+
+@media (max-width: 720px) {
+  .outerContainer {
+    margin-left: 10%;
+    margin-right: 10%;
+    color: white;
+    padding-top: 2%;
+    padding-bottom: 2%;
+  }
+  .FocusStart {
+    width: 60%;
+    margin-left: 20%;
+  }
+  .ShortStart {
+    width: 60%;
+    margin-left: 20%;
+  }
+  .LongStart {
+    width: 60%;
+    margin-left: 20%;
+  }
+  .nextButton {
+    margin-left: 10px;
+  }
+  .Time {
+    font-size: 60px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  .TopContainer {
+    margin-bottom: 0px !important;
+    padding-top: 10px;
+  }
+  .IconName {
+    margin-top: 2px;
+  }
+}
+
+@media (max-width: 345px) {
+  .FocusStart {
+    width: 60%;
+    margin-left: 10%;
+  }
+  .ShortStart {
+    width: 60%;
+    margin-left: 10%;
+  }
+  .LongStart {
+    width: 60%;
+    margin-left: 10%;
+  }
+}

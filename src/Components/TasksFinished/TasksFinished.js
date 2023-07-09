@@ -56,14 +56,14 @@ const TasksFinished = (props) => {
               href="https://github.com/parthivsai?tab=repositories"
               target="_blank"
             >
-              <AiOutlineGithub color="black" size={20} />
+              <AiOutlineGithub color="black" size={25} />
             </a>
             <a
               href="https://www.linkedin.com/in/parthivsai"
               target="_blank"
               className="linkedIn"
             >
-              <AiFillLinkedin color="black" size={20} />
+              <AiFillLinkedin color="black" size={25} />
             </a>
           </div>
         </div>

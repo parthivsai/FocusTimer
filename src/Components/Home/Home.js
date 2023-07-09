@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // using react-dom createPortal for Settings Page and Task Finished Page
 import { createPortal } from "react-dom";
@@ -59,6 +59,9 @@ const Home = () => {
   const [focusLength, setFocusLength] = useState(25);
   const [shortLength, setShortLength] = useState(5);
   const [longLength, setLongLength] = useState(15);
+
+  // Getting window size for dynamic text changes based on screen size
+  const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
   // Adding new Todos which are coming from AddTodo component
   const handleTodo = (todo, value) => {
@@ -411,7 +414,7 @@ const Home = () => {
 
         {/* Title and Settings Section */}
         <div className="TopContainer">
-          <div>
+          <div className="IconName">
             <h4>
               <BsFillCheckCircleFill /> FocusTimer
             </h4>
@@ -450,10 +453,11 @@ const Home = () => {
                   Focus
                 </button>
                 <button className={shortButton} onClick={handleShortClick}>
-                  Short Break
+                  {console.log(windowSize.current[0])}
+                  {windowSize.current[0] < 720 ? "Short" : "Short Break"}
                 </button>
                 <button className={longButton} onClick={handleLongClick}>
-                  Long Break
+                  {windowSize.current[0] < 720 ? "Long" : "Long Break"}
                 </button>
               </div>
               <h1 className="Time">

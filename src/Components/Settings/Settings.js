@@ -40,7 +40,7 @@ const Settings = (props) => {
       <div className="overLay" />
       <div className="card">
         <div className="card-head">
-          <p className="settingsText">Settings</p>
+          <h4 className="settingsText">Settings</h4>
           <button
             className="btn btn-danger closeButton"
             onClick={props.onClose}
@@ -50,7 +50,7 @@ const Settings = (props) => {
         </div>
         <div className="card-body">
           <div className="TopSection">
-            <p>Time(minutes)</p>
+            <p className="TimeText">Time(minutes)</p>
             <div className="InputContainer">
               <div className="FocusInput">
                 Focus{" "}
@@ -63,8 +63,8 @@ const Settings = (props) => {
                   onChange={handleFocusLength}
                 />
               </div>
-              <div>
-                ShortBreak{" "}
+              <div className="shortInput">
+                Short{" "}
                 <input
                   type="number"
                   min="5"
@@ -74,8 +74,8 @@ const Settings = (props) => {
                   onChange={handleShortLength}
                 />
               </div>
-              <div>
-                LongBreak{" "}
+              <div className="longInput">
+                Long{" "}
                 <input
                   type="number"
                   min="15"
@@ -87,16 +87,20 @@ const Settings = (props) => {
               </div>
             </div>
             <div className="toggleSwitches">
-              <ToggleSwitch
-                label="Auto Start Pomos"
-                defaultValue={autoPomo}
-                isChecked={handleAutoPomo}
-              />
-              <ToggleSwitch
-                label="Auto Start Breaks"
-                defaultValue={autoBreak}
-                isChecked={handleAutoBreak}
-              />
+              <div className="autopomo">
+                <ToggleSwitch
+                  label="Auto Start Pomos"
+                  defaultValue={autoPomo}
+                  isChecked={handleAutoPomo}
+                />
+              </div>
+              <div className="autobreak">
+                <ToggleSwitch
+                  label="Auto Start Breaks"
+                  defaultValue={autoBreak}
+                  isChecked={handleAutoBreak}
+                />
+              </div>
             </div>
           </div>
           <hr />
