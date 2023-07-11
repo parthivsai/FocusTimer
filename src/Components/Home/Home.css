@@ -334,7 +334,7 @@
   }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 345px) {
   .FocusStart {
     width: 60%;
     margin-left: 10%;
@@ -346,5 +346,20 @@
   .LongStart {
     width: 60%;
     margin-left: 10%;
+  }
+}
+
+@media (max-width: 395px) {
+  .FocusStart {
+    width: 60%;
+    margin-left: 6%;
+  }
+  .ShortStart {
+    width: 60%;
+    margin-left: 6%;
+  }
+  .LongStart {
+    width: 60%;
+    margin-left: 6%;
   }
 }
